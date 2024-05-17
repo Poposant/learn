@@ -1,10 +1,13 @@
+package testFileElement;
+
 import com.codeborne.pdftest.PDF;
 import com.codeborne.selenide.Condition;
+import com.codeborne.selenide.Configuration;
 import com.codeborne.xlstest.XLS;
 import com.opencsv.CSVReader;
 import org.junit.jupiter.api.Assertions;
+import org.junit.jupiter.api.BeforeAll;
 import org.junit.jupiter.api.Test;
-import org.junit.jupiter.params.shadow.com.univocity.parsers.csv.Csv;
 
 import java.io.*;
 import java.nio.charset.StandardCharsets;
@@ -12,10 +15,14 @@ import java.util.List;
 import java.util.zip.ZipEntry;
 import java.util.zip.ZipInputStream;
 
-import static com.codeborne.selenide.Selenide.$;
-import static com.codeborne.selenide.Selenide.open;
+import static com.codeborne.selenide.Selenide.*;
 
 public class TestFile {
+    @BeforeAll
+    static void beforeAll() {
+        Configuration.holdBrowserOpen = false;
+        Configuration.browserSize = "1920x1080";
+    }
 
     private ClassLoader cl = TestFile.class.getClassLoader();
 
@@ -33,11 +40,12 @@ public class TestFile {
 
 
     @Test
-    void uploadTest() throws IOException {
+    void uploadTest() throws Exception {
         open("https://tus.io/demo");
         $("input[type='file']").uploadFromClasspath("img/Head.cj.jpg");
         $("._root_gq6c0_1").shouldHave(Condition.text("The upload is complete!"));
-    }
+        }
+
 
 
     @Test

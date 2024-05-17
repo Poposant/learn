@@ -13,4 +13,5 @@ public class ErrorPayProduct extends TestBase{
                 .clickContinue()
                 .checkErrorForm();
     }
+
 }
